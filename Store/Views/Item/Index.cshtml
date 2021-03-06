@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Item>
+
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+	<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Index </title>
+		<link href="~/Content/bootstrap.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="mt-3">
+			@Html.ActionLink("Add Item", "Add", "item", null, new { @class = "btn btn-primary mb-2" })
+
+			@if (Model != null && Model.Count() > 0)
+			{
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<td>Id</td>
+							<td>Name</td>
+							<td>Quantity</td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (Item item in Model)
+						{
+							<tr>
+								<td>@item.id</td>
+								<td>@item.name</td>
+								<td>@item.quantity</td>
+								<td>
+
+									<a href="/item/Edit/@item.id" class="btn btn-primary">Edit</a>
+									<a class="btn btn-primary" href="/Item/Delete/@item.id"
+									   onclick="return confirm('Are you sure?')">Delete</a>
+
+									@Ajax.ActionLink("Details", "Details", "Item",
+								   new { id = item.id }, new AjaxOptions
+										{
+									   UpdateTargetId = "popUpDiv2",
+									   InsertionMode = InsertionMode.Replace,
+									   HttpMethod = "Get",
+									   OnComplete = "myFunction()"
+								   }, new { @class = "btn btn-primary" })
+								</td>
+							</tr>
+						}
+
+					</tbody>
+				</table>
+			}
+			else
+			{
+				<h2> No Items</h2>
+			}
+		</div>
+
+		@* Details pop up *@
+		<div class="modal" tabindex="-1" id="popUpDiv1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Details</h5>
+					</div>
+					<div class="modal-body" id="popUpDiv2">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		@* End of details pop up *@
+		@section myScripts{
+			<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+			<script>
+				function myFunction() {
+					$("#popUpDiv1").modal("show")
+				}
+			</script>
+		}
+
+	</body>
+	</html>
+
+

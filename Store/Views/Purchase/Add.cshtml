@@ -1,0 +1,63 @@
+﻿@model PurchaseItems
+@{
+	ViewBag.Title = "Add";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title></title>
+</head>
+<body>
+	<div class="mt-3">
+		@using (Html.BeginForm())
+		{
+			<div class="mb-3 row">
+				@Html.LabelFor(a => a.purchase.itemId, new { @class = "col-sm-2 col-form-label" })
+				<div class=" col-sm-10">
+
+					@Html.DropDownListFor(a => a.purchase.itemId,
+						new SelectList(Model.items, "id", "name"), "", new { @class = "form-control" })
+					@Html.ValidationMessageFor(a => a.purchase.itemId)
+				</div>
+			</div>
+
+			<div class="mb-3 row">
+				@Html.LabelFor(a => a.purchase.quantity, new { @class = "col-sm-2 col-form-label" })
+				<div class=" col-sm-10">
+					@Html.TextBoxFor(a => a.purchase.quantity, new { type = "number", min = "1", step = "1", @class = "form-control" })
+					@Html.ValidationMessageFor(a => a.purchase.quantity)
+				</div>
+			</div>
+
+			<div class="mb-3 row">
+				@Html.LabelFor(a => a.purchase.purchaseDate, new { @class = "col-sm-2 col-form-label" })
+				<div class=" col-sm-10">
+					@Html.TextBoxFor(a => a.purchase.purchaseDate, new { type = "date", id = "datePicker", @class = "form-control" })
+					@Html.ValidationMessageFor(a => a.purchase.purchaseDate)
+				</div>
+			</div>
+
+			<div>
+				<input type="submit" value="Add Purchase" class="btn btn-primary" />
+				@Html.ActionLink("Cancel", "Index", "Item", new { }, new { @class = "btn btn-primary" })
+			</div>
+
+			<div>
+
+				@Html.Label("No Items?") @Html.ActionLink("Add Item", "Add", "Item")
+			</div>
+
+		}
+	</div>
+	<script>
+		document.getElementById('datePicker').valueAsDate = new Date();
+					//document.getElementById('datePicker').min = new Date();
+	</script>
+
+</body>
+</html>
+
+@section scripts{
+	@Scripts.Render("~/bundles/jqueryval")
+}

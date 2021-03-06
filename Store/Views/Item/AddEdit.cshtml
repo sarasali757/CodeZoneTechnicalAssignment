@@ -1,0 +1,9 @@
+﻿
+@model Item
+<div class="mb-3 row">
+	@Html.LabelFor(a => a.name, new { @class = "col-sm-2 col-form-label" })
+	<div class=" col-sm-10">
+		@Html.TextBoxFor(a => a.name, new { @class = "form-control" })
+		@Html.ValidationMessageFor(a => a.name)
+	</div>
+</div>
