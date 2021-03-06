@@ -11,5 +11,7 @@ Stock project implemented using Asp.Net MVC, Entity Framework Code First from DB
 - enable-migration
 - update-database
 
+## Note: 
+Repository contains application solution, database backup file and database ERD picture 
 
 
